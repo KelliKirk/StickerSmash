@@ -1,6 +1,6 @@
 import { ImageSourcePropType, View, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import Button from '@/components/Button';
 import ImageViewer from '@/components/ImageViewer';
@@ -10,6 +10,7 @@ import EmojiPicker from '@/components/EmojiPicker';
 import EmojiList from '@/components/EmojiList';
 import EmojiSticker from '@/components/EmojiSticker';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { saveComposedImageAsync } from '@/utils/saveComposedImage';
 
 const PlaceholderImage = require('@/assets/images/background-image.png');
 
@@ -18,6 +19,7 @@ export default function Index() {
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType | undefined>(undefined);
+  const imageRef = useRef<View>(null);
 
 
   const pickImageAsync = async () => {
@@ -47,16 +49,16 @@ export default function Index() {
     setIsModalVisible(false);
   };
 
-  const onSaveImageAsync = async () => {
-    // we will implement this later
-  };
+  const onSaveImageAsync = () => saveComposedImageAsync(imageRef);
 
   return (
     <GestureHandlerRootView style={styles.container}>
       <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
-        {pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />}
+        <View ref={imageRef} collapsable={false} style={styles.captureArea}>
+          <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
+          {pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />}
+        </View>
       </View>
       {showAppOptions ? (
         <View style={styles.optionsContainer}>
@@ -88,6 +90,11 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
+  },
+  captureArea: {
+    width: 320,
+    height: 440,
+    alignSelf: 'center',
   },
   footerContainer: {
     flex: 1 / 3,
