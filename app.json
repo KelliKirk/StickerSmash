@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "MyFirstApp",
-    "slug": "MyFirstApp",
+    "name": "StickerSmash",
+    "slug": "stickersmash",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myfirstapp",
+    "scheme": "stickersmash",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -30,7 +30,7 @@
         "android.permission.READ_MEDIA_VISUAL_USER_SELECTED",
         "android.permission.READ_MEDIA_IMAGES"
       ],
-      "package": "com.anonymous.MyFirstApp"
+      "package": "com.anonymous.StickerSmash"
     },
     "web": {
       "output": "static",
